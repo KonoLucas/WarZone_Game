@@ -9,7 +9,7 @@
 #include "Orders.h"
 #include "PlayerStrategy.h"
 
-PlayerStrategy* PlayerStrategy::createStrategy(Player *player, const std::string& strategy) {
+PlayerStrategy* PlayerStrategy::createStrategy (Player *player, const std::string& strategy) {
 
   std::string strategy_name;
   for(auto& c : strategy){strategy_name += (char)std::tolower(c);}

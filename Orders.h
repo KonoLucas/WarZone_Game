@@ -169,9 +169,10 @@ private:
 
 public:
     orderList();
+    orderList(const orderList& copyObj);
     // Destructor
     ~orderList();
-
+    
     // Methods to add, remove, move, and display orders
     void addOrder(Order *order);
     void removeOrder(int index);

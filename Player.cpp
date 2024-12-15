@@ -35,18 +35,50 @@ Player::Player(const Player& other) {
 }
 
 // Assignment operator (deep copy)
+// Player& Player::operator=(const Player& other) {
+//     if (this != &other) {
+//         name = other.name;  
+//         ownedTerritories = other.ownedTerritories;  
+//         playerHand = other.playerHand; 
+//         delete playerOrders;  // Delete existing orderList to avoid memory leak
+//         playerOrders = new orderList(*other.playerOrders);  // Deep copy new orderList
+//         numberOfReinforcement = other.numberOfReinforcement; 
+//         negotiate = other.negotiate;  
+//     }
+//     return *this;
+// }
+
 Player& Player::operator=(const Player& other) {
     if (this != &other) {
-        name = other.name;  
-        ownedTerritories = other.ownedTerritories;  
-        playerHand = other.playerHand; 
-        delete playerOrders;  // Delete existing orderList to avoid memory leak
-        playerOrders = new orderList(*other.playerOrders);  // Deep copy new orderList
-        numberOfReinforcement = other.numberOfReinforcement; 
-        negotiate = other.negotiate;  
+        // Deep copy name (if dynamically allocated)  // Free current memory
+        name =other.name;  // Deep copy string (or appropriate type)
+
+        // Deep copy ownedTerritories (if it's a container of pointers)
+        ownedTerritories.clear();
+        for (Territory* territory : other.ownedTerritories) {
+            ownedTerritories.push_back(territory);  // Example deep copy
+        }
+
+        // Deep copy playerHand (if necessary)
+
+        playerHand = Hand(other.playerHand);  // Assuming Hand has a copy constructor
+
+        // Deep copy playerOrders
+
+        if (other.playerOrders) {
+            playerOrders = new orderList(*other.playerOrders);  // Deep copy
+        } else {
+            playerOrders = nullptr;  // Handle the case where other.playerOrders is null
+        }
+
+        // Directly copy simple data types
+        numberOfReinforcement = other.numberOfReinforcement;
+        negotiate = other.negotiate;
+
     }
     return *this;
 }
+
 
 // Destructor
 Player::~Player() {

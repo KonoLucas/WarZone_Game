@@ -643,6 +643,17 @@ orderList::orderList() {
     this->orders = vector<Order*>();
 }
 
+orderList::orderList( const orderList& copyObj){
+    if(this!= &copyObj){
+        this->orders.clear();
+        
+        for(Order* order:copyObj.orders){this->orders.push_back(order);}
+        
+
+    }
+    
+};
+
 orderList::~orderList() {
     for (Order* order : orders) {
         delete order;
